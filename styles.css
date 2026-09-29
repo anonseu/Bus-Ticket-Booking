@@ -1,0 +1,493 @@
+/* ==========================================================
+   DEVELOPER 1 - Home, Check Ticket, About Us, Authentication
+   Standalone stylesheet extracted verbatim from the main project's style.css
+   ========================================================== */
+
+/* Minimalist Color Palette & Global Reset */
+:root {
+    --primary: #00875a;        /* Emerald Green */
+    --primary-dark: #006644;
+    --navy: #0f172a;           /* Deep Navy */
+    --navy-light: #1e293b;
+    --gold: #f59e0b;           /* Gold Accent */
+    --bg-light: #f8fafc;
+    --card-bg: #ffffff;
+    --text-main: #334155;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --radius: 10px;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg-light);
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header & Nav */
+.navbar {
+    background-color: var(--navy);
+    color: #fff;
+    padding: 0.8rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.logo-img {
+    height: 42px;          /* adjust to fit your logo */
+    width: auto;
+    display: block;
+}
+
+.brand-logo small {
+    color: var(--gold);
+    display: block;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-item {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+    padding: 6px 0;
+}
+
+.nav-item:hover, .nav-item.active {
+    color: var(--gold);
+    border-bottom: 2px solid var(--gold);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-display {
+    color: #e2e8f0;
+    font-size: 0.85rem;
+}
+
+/* SPA Views Switcher */
+.spa-view {
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.spa-view.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Buttons & Inputs */
+.btn {
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+}
+
+.btn-outline:hover {
+    background: var(--gold);
+    color: var(--navy);
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 15px;
+}
+
+.form-field label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--navy);
+}
+
+.form-field input, .form-field select {
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    outline: none;
+    font-size: 0.9rem;
+}
+
+/* Hero & Search */
+/* ===== HERO BACKGROUND IMAGE =====
+   >>> Paste the path to your local bus image inside url('...') below <<<
+   e.g. url('images/bus-hero.jpg')
+   The navy gradient is a fallback shown if the image is missing. */
+.hero-section {
+    position: relative;
+    background-image:
+        url('dola_bg.jpg'),
+        linear-gradient(135deg, var(--navy) 0%, #1e293b 100%);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff;
+    padding: 60px 20px 80px 20px;
+    text-align: center;
+}
+
+/* Light dark tint over the image so the text stays readable.
+   Lower the last number (0.65) for a clearer photo, raise it for more contrast. */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.65) 0%, rgba(15, 23, 42, 0.55) 100%);
+    z-index: 1;
+}
+
+/* Keep text and the search box above the overlay */
+.hero-content,
+.search-widget {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content h1 {
+    font-size: 2.2rem;
+    margin-bottom: 12px;
+}
+
+.hero-content p {
+    color: #94a3b8;
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+}
+
+.search-widget {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    color: var(--text-main);
+    text-align: left;
+}
+
+.search-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    align-items: end;      /* every field sits on the same bottom line */
+    margin-bottom: 18px;
+}
+
+/* Each search field: label on top, control below (same layout for From / To / Date / Class) */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.input-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--navy);
+    white-space: nowrap;   /* stops "To Destination" from wrapping and pushing the field out of line */
+}
+
+/* Same height for every control so the bottoms line up */
+.input-group select,
+.input-group input {
+    width: 100%;
+    height: 42px;
+    padding: 0 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    outline: none;
+    font-size: 0.9rem;
+    background: #fff;
+}
+
+/* Destination Cards with Landmarks */
+.section-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.narrow-container {
+    max-width: 600px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.section-title h2 {
+    color: var(--navy);
+    font-size: 1.8rem;
+}
+
+.section-title p {
+    color: var(--text-muted);
+}
+
+.destinations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.landmark-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 20px;
+    border: 1px solid var(--border);
+    position: relative;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.landmark-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+}
+
+.landmark-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #e0f2fe;
+    color: #0369a1;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 12px;
+}
+
+.landmark-icon {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+.landmark-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.card-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+    flex-grow: 1;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-backdrop.active { display: flex; }
+
+.modal-box {
+    background: #fff;
+    padding: 30px;
+    border-radius: var(--radius);
+    max-width: 450px;
+    width: 90%;
+    position: relative;
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px; right: 15px;
+    background: none; border: none; font-size: 1.2rem; cursor: pointer;
+}
+
+.auth-message {
+    background: #fef3c7;
+    color: #92400e;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    margin: 0 20px 15px 0;
+}
+
+.auth-tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 10px;
+    background: none; border: none;
+    font-weight: 600; color: var(--text-muted); cursor: pointer;
+}
+
+.tab-btn.active { color: var(--primary); border-bottom: 2px solid var(--primary); }
+
+.text-center { text-align: center; }
+.text-muted { color: var(--text-muted); }
+.text-success { color: var(--primary); }
+
+/* Footer */
+.footer {
+    background: var(--navy);
+    color: #cbd5e1;
+    margin-top: auto;
+    padding: 40px 20px 20px 20px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.footer-col h4 { color: #fff; margin-bottom: 15px; }
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 8px; }
+.footer-col a { color: #cbd5e1; text-decoration: none; font-size: 0.85rem; }
+.footer-col a:hover { color: var(--gold); }
+.footer-bottom { text-align: center; margin-top: 30px; border-top: 1px solid var(--navy-light); padding-top: 15px; font-size: 0.8rem; }
+
+/* ===== Card box (Check Ticket form + lookup result) ===== */
+.card-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 25px;
+    box-shadow: var(--shadow);
+}
+.card-box h3 { color: var(--navy); margin-bottom: 10px; }
+.card-box p { font-size: 0.9rem; margin-bottom: 6px; }
+
+/* ===== About Us ===== */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 25px;
+    align-items: start;
+}
+@media (max-width: 850px) {
+    .about-grid { grid-template-columns: 1fr; }
+}
+.about-text h3, .about-card h3 { color: var(--navy); margin-bottom: 12px; }
+.about-text p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 14px; }
+.about-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 25px;
+    box-shadow: var(--shadow);
+}
+.fleet-list { list-style: none; }
+.fleet-list li {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+}
+.fleet-list li:last-child { border-bottom: none; padding-bottom: 0; }
+.fleet-list strong { color: var(--navy); }
+
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 22px;
+}
+@media (max-width: 500px) {
+    .stats-row { grid-template-columns: 1fr; }
+}
+.stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--gold);
+    border-radius: var(--radius);
+    padding: 16px 10px;
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+.stat-card h4 { color: var(--primary); font-size: 1.5rem; margin-bottom: 4px; }
+.stat-card p { color: var(--text-muted); font-size: 0.8rem; margin: 0; }

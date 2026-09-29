@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Dev 1] Dola Paribahan | Online Bus Ticket Booking</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header / Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <!-- 
+                LOGO IMAGE: paste the path to your local logo file in the src below
+                (e.g. src="images/logo.png"). Keeps the same link behavior as before (goes to Home).
+            -->
+            <a href="#" class="brand-logo" onclick="switchView('view-home')">
+                <img src="dola_logo.png" alt="Dola Paribahan" class="logo-img">
+            </a>
+
+            <nav class="nav-links">
+                <a href="#" class="nav-item active" data-view="view-home" onclick="switchView('view-home')">Home</a>
+                <a href="#" class="nav-item" data-view="view-lookup" onclick="switchView('view-lookup')">Check Ticket</a>
+                <a href="#" class="nav-item" data-view="view-about" onclick="switchView('view-about')">About Us</a>
+            </nav>
+
+            <div class="nav-actions">
+                <span id="user-display" class="user-display" style="display: none;">Hi, <strong id="user-name-span">User</strong></span>
+                <button class="btn btn-outline" id="auth-btn" onclick="openAuthModal()">Login / Register</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN VIEW CONTAINER (SPA Views) -->
+    <main class="main-content">
+
+        <!-- 1. HOME VIEW -->
+        <section id="view-home" class="spa-view active">
+            <!-- Hero Banner
+                 BACKGROUND IMAGE: the bus photo is set in styles.css under ".hero-section"
+                 (look for "HERO BACKGROUND IMAGE"). The ".hero-overlay" below is the light
+                 dark tint that keeps the text readable. -->
+            <div class="hero-section">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h1>Connecting Dhaka with Southern Bangladesh</h1>
+                    <p>Comfortable, reliable, and safe coach service since 2001. Book your journey across Khulna, Pirojpur, Bagerhat & Gopalganj.</p>
+                </div>
+
+                <!-- Quick Search Widget -->
+                <div class="search-widget">
+                    <form id="hero-search-form" onsubmit="handleHeroSearch(event)">
+                        <div class="search-grid">
+                            <div class="input-group">
+                                <label>From</label>
+                                <select id="search-from">
+                                    <option value="Dhaka">Dhaka (Sayedabad / Gabtoli)</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>To Destination</label>
+                                <select id="search-to">
+                                    <option value="Khulna">Khulna</option>
+                                    <option value="Pirojpur">Pirojpur</option>
+                                    <option value="Bagerhat">Bagerhat</option>
+                                    <option value="Gopalganj">Gopalganj</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Journey Date</label>
+                                <input type="date" id="search-date" required>
+                            </div>
+                            <div class="input-group">
+                                <label>Coach Class</label>
+                                <select id="search-class">
+                                    <option value="All">All Coaches</option>
+                                    <option value="AC">AC Deluxe</option>
+                                    <option value="Non-AC">Non-AC Chair Coach</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block search-btn">Find Available Buses 🚌</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Destinations & Landmarks Section -->
+            <div class="section-container">
+                <div class="section-title">
+                    <h2>Popular Destinations & Landmarks</h2>
+                    <p>Travel through Bangladesh's rich heritage and iconic south-western hubs</p>
+                </div>
+
+                <div class="destinations-grid">
+                    <!-- Dhaka -->
+                    <div class="landmark-card">
+                        <div class="landmark-badge">Starting Point</div>
+                        <div class="landmark-icon">🏛️</div>
+                        <h3>Dhaka</h3>
+                        <p class="landmark-name">Ahsan Manzil (Pink Palace)</p>
+                        <p class="card-desc">Major departure hub from Sayedabad, Jatrabari, and Gabtoli terminals.</p>
+                        <button class="btn btn-sm btn-outline" onclick="selectDestination('Khulna')">Book From Dhaka</button>
+                    </div>
+
+                    <!-- Bagerhat -->
+                    <div class="landmark-card">
+                        <div class="landmark-badge">UNESCO Site</div>
+                        <div class="landmark-icon">🕌</div>
+                        <h3>Bagerhat</h3>
+                        <p class="landmark-name">60 Dome Mosque (Shat Gombuj)</p>
+                        <p class="card-desc">Experience historic Islamic architecture and the gateway to the Sundarbans.</p>
+                        <button class="btn btn-sm btn-outline" onclick="selectDestination('Bagerhat')">Book Route</button>
+                    </div>
+
+                    <!-- Pirojpur -->
+                    <div class="landmark-card">
+                        <div class="landmark-badge">River Hub</div>
+                        <div class="landmark-icon">🌉</div>
+                        <h3>Pirojpur</h3>
+                        <p class="landmark-name">Bekutia Bridge (8th Bangladesh-China Friendship Bridge)</p>
+                        <p class="card-desc">Seamless crossing connecting Southern riverine trade corridors.</p>
+                        <button class="btn btn-sm btn-outline" onclick="selectDestination('Pirojpur')">Book Route</button>
+                    </div>
+
+                    <!-- Khulna -->
+                    <div class="landmark-card">
+                        <div class="landmark-badge">Division City</div>
+                        <div class="landmark-icon">🎓</div>
+                        <h3>Khulna</h3>
+                        <p class="landmark-name">Khulna University Campus</p>
+                        <p class="card-desc">Direct trips connecting Sonadanga and Royal Mor with high-frequency schedules.</p>
+                        <button class="btn btn-sm btn-outline" onclick="selectDestination('Khulna')">Book Route</button>
+                    </div>
+
+                    <!-- Gopalganj -->
+                    <div class="landmark-card">
+                        <div class="landmark-badge">Official Hub</div>
+                        <div class="landmark-icon">⛽</div>
+                        <h3>Gopalganj</h3>
+                        <p class="landmark-name">Dola Filling Station & Terminal</p>
+                        <p class="card-desc">Direct service to Tungipara, Patgati & main district counter at Dola Station.</p>
+                        <button class="btn btn-sm btn-outline" onclick="selectDestination('Gopalganj')">Book Route</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. TICKET LOOKUP VIEW -->
+        <section id="view-lookup" class="spa-view">
+            <div class="section-container narrow-container">
+                <div class="section-title">
+                    <h2>Verify or Retrieve Ticket</h2>
+                    <p>Enter your Ticket Reference ID or registered Mobile Number</p>
+                </div>
+
+                <div class="card-box">
+                    <form onsubmit="handleTicketSearch(event)">
+                        <div class="form-field">
+                            <label>Search Method</label>
+                            <select id="lookup-type" onchange="toggleLookupInput()">
+                                <option value="ref">By Booking Ref ID (e.g., DOLA-88219)</option>
+                                <option value="phone">By Passenger Mobile Number</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label id="lookup-label">Booking Reference ID</label>
+                            <input type="text" id="lookup-value" required placeholder="DOLA-XXXXXX">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Find E-Ticket</button>
+                    </form>
+                </div>
+
+                <div id="lookup-result-container" style="margin-top: 25px;"></div>
+            </div>
+        </section>
+
+        <!-- 5. ABOUT US VIEW -->
+        <section id="view-about" class="spa-view">
+            <div class="section-container">
+                <div class="section-title">
+                    <h2>About Dola Paribahan</h2>
+                    <p>Pioneering seamless connectivity across southern Bangladesh</p>
+                </div>
+
+                <div class="about-grid">
+                    <div class="about-text">
+                        <h3>25+ Years of Dedicated Service</h3>
+                        <p>Established in 2001, Dola Paribahan has remained a trusted inter-district bus operator connecting Dhaka directly with Gopalganj, Pirojpur, Bagerhat, and Khulna.</p>
+                        <p>With the opening of the Padma Bridge, Dola Paribahan revolutionized southern travel time, offering modern Isuzu Non-AC and Deluxe AC coaches equipped with plush reclining seating, GPS tracking, and experienced highway drivers.</p>
+                        
+                        <div class="stats-row">
+                            <div class="stat-card"><h4>50+</h4><p>Coaches</p></div>
+                            <div class="stat-card"><h4>15+</h4><p>Key Counters</p></div>
+                            <div class="stat-card"><h4>10M+</h4><p>Passengers Served</p></div>
+                        </div>
+                    </div>
+                    <div class="about-card">
+                        <h3>Fleet Specifications</h3>
+                        <ul class="fleet-list">
+                            <li>🚌 <strong>Isuzu Deluxe AC:</strong> Individual AC vents, dual reclining chair coaches, reading lights, and entertainment audio.</li>
+                            <li>🚌 <strong>Hino/Isuzu Non-AC:</strong> Spacious 2x2 arrangement, high ceiling clearance, extra luggage bays.</li>
+                            <li>🛡️ <strong>Safety Standards:</strong> Speed governors restricted to highway safety limits, trained drivers, and 24/7 hotline helpline.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PLACEHOLDER (standalone only): the real Book Ticket page belongs to Developer 2's module. Delete at merge. -->
+        <section id="view-booking" class="spa-view">
+            <div class="section-container">
+                <div class="section-title">
+                    <h2>Book Ticket</h2>
+                    <p>This page belongs to Developer 2's module (bus list, seat map, payment). It is a placeholder so Developer 1's Home search can be demonstrated on its own.</p>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-primary" onclick="switchView('view-home')">&larr; Back to Home</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <a href="#" class="brand-logo footer-logo">🚌 DO LA PARIBAHAN</a>
+                <p>Providing seamless, reliable inter-district bus travel across Dhaka, Khulna, Pirojpur, Bagerhat, and Gopalganj.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#" onclick="switchView('view-home')">Home</a></li>
+                    <li><a href="#" onclick="switchView('view-lookup')">E-Ticket Lookup</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Customer Support</h4>
+                <p>24/7 Hotline: <strong>01700-000000</strong></p>
+                <p>Support Email: <strong>info@dolagroupbd.com</strong></p>
+                <p>Head Office: Sayedabad Bus Terminal, Dhaka</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Dola Paribahan Ltd. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL 1: AUTHENTICATION (LOGIN / REGISTER) -->
+    <div class="modal-backdrop" id="auth-modal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeAuthModal()">✕</button>
+
+            <!-- Shown when a guest is asked to log in (e.g. for Check Ticket or booking) -->
+            <p id="auth-message" class="auth-message" style="display:none;"></p>
+
+            <div class="auth-tabs">
+                <button class="tab-btn active" id="tab-login-btn" onclick="switchAuthTab('login')">Login</button>
+                <button class="tab-btn" id="tab-register-btn" onclick="switchAuthTab('register')">Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="form-login" onsubmit="handleLogin(event)">
+                <div class="form-field">
+                    <label>Mobile Number</label>
+                    <input type="tel" id="login-phone" placeholder="017XXXXXXXX" required>
+                </div>
+                <div class="form-field">
+                    <label>Password</label>
+                    <input type="password" id="login-pass" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="form-register" style="display:none;" onsubmit="handleRegister(event)">
+                <div class="form-field">
+                    <label>Full Name</label>
+                    <input type="text" id="reg-name" required placeholder="Full Name">
+                </div>
+                <div class="form-field">
+                    <label>Mobile Number</label>
+                    <input type="tel" id="reg-phone" pattern="[0-9]{11}" required placeholder="017XXXXXXXX">
+                </div>
+                <div class="form-field">
+                    <label>Create Password</label>
+                    <input type="password" id="reg-pass" required minlength="4">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
